@@ -9,7 +9,7 @@ CREATE TABLE `beneficiaries` (
   `firstName` varchar(100) NOT NULL,
   `lastName` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT AUTO_INCREMENT=1001 CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
@@ -18,11 +18,11 @@ CREATE TABLE `beneficiaries` (
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `beneficiary_id` int(11) NOT NULL,
+  `beneficiaries_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `accounts_beneficiaries_FK` (`beneficiary_id`),
-  CONSTRAINT `accounts_beneficiaries_FK` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`id`)
-) ENGINE=InnoDB DEFAULT AUTO_INCREMENT=1801 CHARSET=utf8;
+  KEY `accounts_beneficiaries_FK` (`beneficiaries_id`),
+  CONSTRAINT `accounts_beneficiaries_FK` FOREIGN KEY (`beneficiaries_id`) REFERENCES `beneficiaries` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
@@ -31,11 +31,11 @@ CREATE TABLE `accounts` (
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accountId` int(11) NOT NULL,
+  `accounts_id` int(11) NOT NULL,
   `amount` decimal(15,2) NOT NULL,
   `type` varchar(100) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `transactions_accounts_FK` (`accountId`),
-  CONSTRAINT `transactions_accounts_FK` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB DEFAULT AUTO_INCREMENT=10001 CHARSET=utf8;
+  KEY `transactions_accounts_FK` (`accounts_id`),
+  CONSTRAINT `transactions_accounts_FK` FOREIGN KEY (`accounts_id`) REFERENCES `accounts` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
