@@ -1,5 +1,6 @@
 package com.trial.api;
 
+import com.trial.dtos.BalanceDTO;
 import com.trial.entities.Accounts;
 import com.trial.entities.Beneficiaries;
 import com.trial.entities.Transactions;
@@ -69,7 +70,9 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllAccountsBalanceForBeneficiary(@PathParam("id") int id) {
 		log.info("Retrieving all accounts balance of beneficiary with id {}", id);
-		return Response.ok().build();
+		List<BalanceDTO> accountBalances = transactionsService.getAllAccountsBalanceForBeneficiary(id);
+		log.info("Accounts balance of beneficiary with id {} are {}", id, accountBalances);
+		return Response.ok(accountBalances).build();
 	}
 
 	@GET
