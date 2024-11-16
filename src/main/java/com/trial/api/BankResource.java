@@ -2,8 +2,10 @@ package com.trial.api;
 
 import com.trial.entities.Accounts;
 import com.trial.entities.Beneficiaries;
+import com.trial.entities.Transactions;
 import com.trial.services.AccountsService;
 import com.trial.services.BeneficiariesService;
+import com.trial.services.TransactionsService;
 import com.trial.utilities.ResponseUtility;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -28,6 +30,9 @@ public class BankResource {
 
 	@Inject
 	AccountsService accountsService;
+
+	@Inject
+	TransactionsService transactionsService;
 
 	@GET
 	@Path("beneficiary-details/{id}")
@@ -54,7 +59,9 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTransactionsForBeneficiary(@PathParam("id") int id) {
 		log.info("Retrieving transactions of beneficiary with id {}", id);
-		return Response.ok().build();
+		List<Transactions> transactions = transactionsService.getTransactionsOfBeneficiary(id);
+		log.info("Transactions of beneficiary with id {} are {}", id, transactions);
+		return Response.ok(transactions).build();
 	}
 
 	@GET
