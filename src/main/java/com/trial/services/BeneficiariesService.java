@@ -2,7 +2,7 @@ package com.trial.services;
 
 import com.trial.entities.Beneficiaries;
 import com.trial.repositories.BeneficiariesRepository;
-import jakarta.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class BeneficiariesService {
 
-	@Inject
+	@Autowired
 	BeneficiariesRepository beneficiariesRepository;
 
 	public Optional<Beneficiaries> getBeneficiaryDetails(int id){
