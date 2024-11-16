@@ -1,6 +1,8 @@
 package com.trial.api;
 
+import com.trial.entities.Accounts;
 import com.trial.entities.Beneficiaries;
+import com.trial.services.AccountsService;
 import com.trial.services.BeneficiariesService;
 import com.trial.utilities.ResponseUtility;
 import jakarta.inject.Inject;
@@ -12,6 +14,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Slf4j
 @Path("/trial/bank")
 public class BankResource {
@@ -22,7 +26,9 @@ public class BankResource {
 	@Inject
 	BeneficiariesService beneficiariesService;
 
-	
+	@Inject
+	AccountsService accountsService;
+
 	@GET
 	@Path("beneficiary-details/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +44,9 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAccountsForBeneficiary(@PathParam("id") int id) {
 		log.info("Retrieving accounts of beneficiary with id {}", id);
-		return Response.ok().build();
+		List<Accounts> accounts = accountsService.getAccountsOfBeneficiary(id);
+		log.info("Accounts of beneficiary with id {} are {}", id, accounts);
+		return Response.ok(accounts).build();
 	}
 
 	@GET
