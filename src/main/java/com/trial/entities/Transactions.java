@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "transactions")
@@ -39,5 +39,5 @@ public class Transactions {
 	private String type;
 
 	@Temporal(TemporalType.DATE)
-	private Date date;
+	private LocalDate date;
 }

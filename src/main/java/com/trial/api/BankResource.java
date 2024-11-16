@@ -8,7 +8,6 @@ import com.trial.services.AccountsService;
 import com.trial.services.BeneficiariesService;
 import com.trial.services.TransactionsService;
 import com.trial.utilities.ResponseUtility;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -16,6 +15,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -23,16 +23,16 @@ import java.util.List;
 @Path("/trial/bank")
 public class BankResource {
 
-	@Inject
+	@Autowired
 	ResponseUtility responseUtility;
 
-	@Inject
+	@Autowired
 	BeneficiariesService beneficiariesService;
 
-	@Inject
+	@Autowired
 	AccountsService accountsService;
 
-	@Inject
+	@Autowired
 	TransactionsService transactionsService;
 
 	@GET
@@ -80,6 +80,8 @@ public class BankResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getLargestWithdrawalForLastMonthForBeneficiary(@PathParam("id") int id) {
 		log.info("Retrieving largest withdrawal for last month of beneficiary with id {}", id);
-		return Response.ok().build();
+		Transactions largestTransaction = transactionsService.getLargestWithdrawalLastMonthForBeneficiary(id).orElse(null);
+		log.info("Largest withdrawal for last month of beneficiary with id {} is {}", id, largestTransaction);
+		return responseUtility.okOrEmpty(largestTransaction);
 	}
 }
