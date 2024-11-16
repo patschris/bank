@@ -1,5 +1,9 @@
 package com.trial.api;
 
+import com.trial.entities.Beneficiaries;
+import com.trial.services.BeneficiariesService;
+import com.trial.utilities.ResponseUtility;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -12,12 +16,21 @@ import lombok.extern.slf4j.Slf4j;
 @Path("/trial/bank")
 public class BankResource {
 
+	@Inject
+	ResponseUtility responseUtility;
+
+	@Inject
+	BeneficiariesService beneficiariesService;
+
+	
 	@GET
 	@Path("beneficiary-details/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBeneficiaryDetails(@PathParam("id") int id) {
 		log.info("Retrieving beneficiary details for id {}", id);
-		return Response.ok().build();
+		Beneficiaries beneficiary = beneficiariesService.getBeneficiaryDetails(id).orElse(null);
+		log.info("Beneficiary details for id {} is {}", id, beneficiary);
+		return responseUtility.okOrEmpty(beneficiary);
 	}
 
 	@GET
