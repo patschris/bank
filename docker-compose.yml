@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: bank
     volumes:
       - ./mysqldb:/var/lib/mysql
-      - ./src/main/resources/init-scripts:/docker-entrypoint-initdb.d
+      - ./init-scripts:/docker-entrypoint-initdb.d
     ports:
       - "3310:3306"
     networks:
